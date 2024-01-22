@@ -1,15 +1,48 @@
 import React, { useState } from "react";
-import Table from "./Table";
 import Piechart from "./Piechart";
 import Header from "./Header";
+import Graph from "./Graph";
+import { graphData, pieChartData } from "./Data";
+import Table from "./Table";
+import ProfileCard from "./ProfileCard";
 
 const Sidebar = () => {
+  const [userData] = useState({
+    labels: graphData.map((data) => data.x),
+    datasets: [
+      {
+        label: "No of users",
+        data: graphData.map((data) => data.y),
+        backgroundColor: "blue",
+        borderColor: "rgb(37, 150, 190)",
+        borderWidth: 2,
+      },
+    ],
+  });
+  const [userDataPie] = useState({
+    labels: pieChartData.map((data) => data.label),
+    datasets: [
+      {
+        label: "No of users",
+        data: pieChartData.map((data) => data.value),
+        backgroundColor: [
+          "#24c373",
+          "#b9efd4",
+          "#7edcad",
+          "#78cfa4",
+          "#71d2a2",
+        ],
+        borderColor: "white",
+        borderWidth: 2,
+      },
+    ],
+  });
   const [open, setOpen] = useState(false);
   return (
     <div className="flex">
       <div
         className={`${
-          open ? "w-64 relative" : "w-24 relative"
+          open ? "w-24 relative" : "w-64 relative"
         } duration-300  h-screen bg-dark-blue }`}
       >
         <div className="flex flex-col w-[50%] m-auto h-48">
@@ -24,7 +57,7 @@ const Sidebar = () => {
             width={25}
             height={25}
             className={`cursor-pointer rounded-full  bg-slate-100 ${
-              !open && "rotate-180"
+              open && "rotate-180"
             }`}
           />
         </div>
@@ -63,9 +96,13 @@ const Sidebar = () => {
       <div className="table_charts">
         <div className="container">
           <Header />
-          <div className="flex gap-5 mt-5">
+          <div className="flex sm:flex-row flex-col gap-5 mt-2">
+            <Graph pieData={userData} />
+            <Piechart pieData={userDataPie} />
+          </div>
+          <div className="flex sm:flex-row flex-col gap-3 mt-3 ">
             <Table />
-            <Piechart />
+            <ProfileCard />
           </div>
         </div>
       </div>

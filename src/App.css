@@ -9,7 +9,7 @@ button {
   border: none;
 }
 .container {
-  max-width: 1000px;
+  max-width: 1400px;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -17,18 +17,38 @@ button {
 }
 .active {
   background-color: white !important;
-  border-radius: 10px;
   padding: 10px 30px;
   color: black;
-  cursor: pointer;
 }
 
 .nav_tabs ul li {
   background-color: rgba(28, 28, 102, 0.896);
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   padding: 10px 30px;
+}
+.nav_tabs ul li:hover {
+  color: black;
+  cursor: pointer;
+  background-color: white !important;
 }
 .nav_tabs ul li img {
   width: auto;
   height: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+  padding: 8px;
+  outline: none;
+  border: none;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }

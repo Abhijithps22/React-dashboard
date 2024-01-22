@@ -4,8 +4,9 @@ const Header = () => {
   return (
     <header>
       <div className="flex sm:flex-row flex-col justify-between items-center sm:w-[1200px] w-auto ">
-        <div className="font-bold text-lg">
+        <div className="font-bold text-lg flex ">
           <h2>Good Morning !</h2>
+          <img src="/Assets/sun png.webp" alt="" width={30} height={30} />
         </div>
         <div className="shadow-lg p-3 flex gap-3 rounded-md">
           <div>
