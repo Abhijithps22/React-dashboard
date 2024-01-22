@@ -5,6 +5,7 @@ import Graph from "./Graph";
 import { graphData, pieChartData } from "./Data";
 import Table from "./Table";
 import ProfileCard from "./ProfileCard";
+import Pagination from "./Pagination";
 
 const Sidebar = () => {
   const [userData] = useState({
@@ -103,6 +104,10 @@ const Sidebar = () => {
           <div className="flex sm:flex-row flex-col gap-3 mt-3 ">
             <Table />
             <ProfileCard />
+          </div>
+
+          <div>
+            <Pagination />
           </div>
         </div>
       </div>
