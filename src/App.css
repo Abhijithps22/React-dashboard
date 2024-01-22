@@ -38,6 +38,10 @@ button {
   width: auto;
   height: auto;
 }
+.icon-only h6 {
+  display: none;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;

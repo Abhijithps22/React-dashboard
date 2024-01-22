@@ -43,7 +43,7 @@ const Sidebar = () => {
     ],
   });
 
-  const [open, setOpen] = useState(false);
+  const [hide, setHide] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,7 +95,7 @@ const Sidebar = () => {
     <div className="flex">
       <div
         className={`${
-          open ? "w-24 relative" : "w-64 relative"
+          hide ? "w-24 relative" : "w-64 relative"
         } duration-300  h-auto bg-dark-blue }`}
       >
         <div className="flex flex-col w-[50%] m-auto h-48">
@@ -104,13 +104,13 @@ const Sidebar = () => {
         </div>
         <div className="absolute right-0 top-10">
           <img
-            onClick={() => setOpen(!open)}
+            onClick={() => setHide(!hide)}
             src="/Assets/arrow.png"
             alt=""
             width={25}
             height={25}
             className={`cursor-pointer rounded-full  bg-slate-100 ${
-              open && "rotate-180"
+              hide && "rotate-180"
             }`}
           />
         </div>
@@ -123,17 +123,17 @@ const Sidebar = () => {
             <li className="text-white flex gap-3">
               {" "}
               <img src="/Assets/Support.png" alt="" />
-              Support
+              <h6> Support </h6>
             </li>
             <li className="text-white flex gap-3">
               {" "}
               <img src="/Assets/Puzzle.png" alt="" />
-              Plugins
+              <h6> Plugins</h6>
             </li>
             <li className="text-white flex gap-3">
               {" "}
               <img src="/Assets/Help.png" alt="" />
-              Help
+              <h6> Help</h6>
             </li>
           </ul>
         </div>
@@ -157,7 +157,6 @@ const Sidebar = () => {
             <Table tableData={tableData} />
             <ProfileCard />
           </div>
-
           <div>
             <Pagination />
           </div>
