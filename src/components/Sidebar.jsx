@@ -1,31 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Piechart from "./Piechart";
 import Header from "./Header";
 import Graph from "./Graph";
-import { graphData, pieChartData } from "./Data";
 import Table from "./Table";
 import ProfileCard from "./ProfileCard";
 import Pagination from "./Pagination";
+import axios from "axios";
+
+const BASE_URL = "http://localhost:3001/api";
 
 const Sidebar = () => {
-  const [userData] = useState({
-    labels: graphData.map((data) => data.x),
+  const [tableData, setTableData] = useState({});
+  const [userData, setUserData] = useState({
+    labels: [],
     datasets: [
       {
         label: "No of users",
-        data: graphData.map((data) => data.y),
+        data: [],
         backgroundColor: "blue",
         borderColor: "rgb(37, 150, 190)",
         borderWidth: 2,
       },
     ],
   });
-  const [userDataPie] = useState({
-    labels: pieChartData.map((data) => data.label),
+
+  const [userDataPie, setUserDataPie] = useState({
+    labels: [],
     datasets: [
       {
         label: "No of users",
-        data: pieChartData.map((data) => data.value),
+        data: [],
         backgroundColor: [
           "#24c373",
           "#b9efd4",
@@ -38,13 +42,61 @@ const Sidebar = () => {
       },
     ],
   });
-  const [open, setOpen] = useState(false);
+
+  const [hide, setHide] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const pieChartDataResponse = await axios.get(`${BASE_URL}/pie-chart`);
+        const graphDataResponse = await axios.get(`${BASE_URL}/graph`);
+        const tableDataResponse = await axios.get(`${BASE_URL}/table`);
+        setTableData(tableDataResponse);
+
+        setUserData({
+          labels: graphDataResponse.data.map((data) => data.x),
+          datasets: [
+            {
+              label: "No of users",
+              data: graphDataResponse.data.map((data) => data.y),
+              backgroundColor: "blue",
+              borderColor: "rgb(37, 150, 190)",
+              borderWidth: 2,
+            },
+          ],
+        });
+
+        setUserDataPie({
+          labels: pieChartDataResponse.data.map((data) => data.label),
+          datasets: [
+            {
+              label: "No of users",
+              data: pieChartDataResponse.data.map((data) => data.value),
+              backgroundColor: [
+                "#24c373",
+                "#b9efd4",
+                "#7edcad",
+                "#78cfa4",
+                "#71d2a2",
+              ],
+              borderColor: "white",
+              borderWidth: 2,
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="flex">
       <div
         className={`${
-          open ? "w-24 relative" : "w-64 relative"
-        } duration-300  h-screen bg-dark-blue }`}
+          hide ? "w-24 relative" : "w-64 relative"
+        } duration-300  h-auto bg-dark-blue }`}
       >
         <div className="flex flex-col w-[50%] m-auto h-48">
           <img src="/Assets/Briefcase.png" alt="" width={100} height={100} />
@@ -52,13 +104,13 @@ const Sidebar = () => {
         </div>
         <div className="absolute right-0 top-10">
           <img
-            onClick={() => setOpen(!open)}
+            onClick={() => setHide(!hide)}
             src="/Assets/arrow.png"
             alt=""
             width={25}
             height={25}
             className={`cursor-pointer rounded-full  bg-slate-100 ${
-              open && "rotate-180"
+              hide && "rotate-180"
             }`}
           />
         </div>
@@ -71,17 +123,17 @@ const Sidebar = () => {
             <li className="text-white flex gap-3">
               {" "}
               <img src="/Assets/Support.png" alt="" />
-              Support
+              <h6> Support </h6>
             </li>
             <li className="text-white flex gap-3">
               {" "}
               <img src="/Assets/Puzzle.png" alt="" />
-              Plugins
+              <h6> Plugins</h6>
             </li>
             <li className="text-white flex gap-3">
               {" "}
               <img src="/Assets/Help.png" alt="" />
-              Help
+              <h6> Help</h6>
             </li>
           </ul>
         </div>
@@ -102,10 +154,9 @@ const Sidebar = () => {
             <Piechart pieData={userDataPie} />
           </div>
           <div className="flex sm:flex-row flex-col gap-3 mt-3 ">
-            <Table />
+            <Table tableData={tableData} />
             <ProfileCard />
           </div>
-
           <div>
             <Pagination />
           </div>
