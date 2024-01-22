@@ -8,7 +8,7 @@ const Header = () => {
           <h2>Good Morning !</h2>
           <img src="/Assets/sun png.webp" alt="" width={30} height={30} />
         </div>
-        <div className="shadow-lg p-3 flex gap-3 rounded-md">
+        <div className="shadow-lg p-3 flex gap-3 rounded-md bg-white">
           <div>
             <h2 className="text-base font-semibold">Hello</h2>
             <h4>john@doe.com</h4>
